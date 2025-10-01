@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Modern Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="calculator-container">
+      <header class="calculator-header">
+        <h1 class="calculator-title">Calculator</h1>
+      </header>
+
+      <main class="calculator-main">
+        <!-- Variables Section -->
+        <section class="variables-section">
+          <h2 class="section-title">Variables</h2>
+          <div class="input-group">
+            <input
+              id="name-field"
+              type="text"
+              placeholder="Variable Name"
+              class="input-field"
+            />
+            <input
+              id="value-field"
+              type="text"
+              placeholder="Variable Value"
+              class="input-field"
+            />
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="variableButton"
+              onclick="addVariables()"
+            >
+              Add Variable
+            </button>
+          </div>
+
+          <div id="alert" class="alert alert-error" style="display: none">
+            Variable name cannot be a constant name
+          </div>
+
+          <div id="variable-list" class="variable-list"></div>
+        </section>
+
+        <!-- Constants Section -->
+        <section class="constants-section">
+          <h2 class="section-title">Constants</h2>
+          <div class="constants-grid">
+            <div class="constant-item">
+              <span class="constant-name">π (pi)</span>
+              <span class="constant-value">3.1415</span>
+            </div>
+            <div class="constant-item">
+              <span class="constant-name">e</span>
+              <span class="constant-value">2.7182</span>
+            </div>
+          </div>
+
+          <div class="section-info">
+            <small
+              >Use pi and e in calculations. Example: sin(pi/2) or e^2</small
+            >
+          </div>
+        </section>
+
+        <!-- History Controls -->
+        <section class="history-section">
+          <h2 class="section-title">History</h2>
+          <div class="history-controls">
+            <button
+              class="btn btn-secondary"
+              onclick="navigateHistory('prev')"
+              title="Previous calculation"
+            >
+              ← Previous
+            </button>
+            <button
+              class="btn btn-info"
+              onclick="displayHistory()"
+              title="View all history"
+            >
+              View All
+            </button>
+            <button
+              class="btn btn-secondary"
+              onclick="navigateHistory('next')"
+              title="Next calculation"
+            >
+              Next →
+            </button>
+            <button
+              class="btn btn-danger"
+              onclick="clearAllHistory()"
+              title="Clear all history"
+            >
+              Clear All
+            </button>
+          </div>
+          <div class="history-info">
+            <small
+              >Use Previous/Next to browse individual calculations, or View All
+              to see complete history</small
+            >
+          </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="calculator-section">
+          <div class="display-container">
+            <textarea
+              id="inputfield"
+              class="calculator-display"
+              placeholder="Perform calculations....."
+              readonly
+            ></textarea>
+          </div>
+
+          <!-- Function Buttons -->
+          <div class="button-row">
+            <button class="calc-btn function-btn" onclick="setValue('sin')">
+              sin
+            </button>
+            <button class="calc-btn function-btn" onclick="setValue('cos')">
+              cos
+            </button>
+            <button class="calc-btn function-btn" onclick="setValue('tan')">
+              tan
+            </button>
+            <button class="calc-btn function-btn" onclick="setValue('sqrt')">
+              √
+            </button>
+          </div>
+
+          <!-- Clear and Parentheses -->
+          <div class="button-row">
+            <button class="calc-btn clear-btn" onclick="clr()">C</button>
+            <button class="calc-btn operator-btn" onclick="setValue('(')">
+              (
+            </button>
+            <button class="calc-btn operator-btn" onclick="setValue(')')">
+              )
+            </button>
+            <button class="calc-btn operator-btn" onclick="setValue('/')">
+              ÷
+            </button>
+          </div>
+
+          <!-- Number Pad -->
+          <div class="button-row">
+            <button class="calc-btn number-btn" onclick="setValue('7')">
+              7
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('8')">
+              8
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('9')">
+              9
+            </button>
+            <button class="calc-btn operator-btn" onclick="setValue('*')">
+              ×
+            </button>
+          </div>
+
+          <div class="button-row">
+            <button class="calc-btn number-btn" onclick="setValue('4')">
+              4
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('5')">
+              5
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('6')">
+              6
+            </button>
+            <button class="calc-btn operator-btn" onclick="setValue('+')">
+              +
+            </button>
+          </div>
+
+          <div class="button-row">
+            <button class="calc-btn number-btn" onclick="setValue('1')">
+              1
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('2')">
+              2
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('3')">
+              3
+            </button>
+            <button class="calc-btn operator-btn" onclick="setValue('-')">
+              −
+            </button>
+          </div>
+
+          <div class="button-row">
+            <button class="calc-btn operator-btn" onclick="setValue('^')">
+              ^
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('0')">
+              0
+            </button>
+            <button class="calc-btn number-btn" onclick="setValue('.')">
+              .
+            </button>
+            <button class="calc-btn equals-btn" onclick="displayContent()">
+              =
+            </button>
+          </div>
+
+          <!-- Additional Controls -->
+          <div class="button-row" style="margin-top: 1rem">
+            <button
+              class="calc-btn btn-info"
+              onclick="showVariables()"
+              style="grid-column: span 2"
+            >
+              Show Variables
+            </button>
+            <button class="calc-btn btn-secondary" onclick="showStats()">
+              Stats
+            </button>
+            <button class="calc-btn btn-secondary" onclick="setValue('pi')">
+              π
+            </button>
+            <button class="calc-btn btn-secondary" onclick="setValue('e')">
+              e
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- History Popup Modal -->
+    <div id="historyModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Calculation History</h2>
+          <span class="close" onclick="closeHistoryModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="historyContent"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" onclick="clearAllHistory()">
+            Clear All History
+          </button>
+          <button class="btn btn-secondary" onclick="closeHistoryModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="logic.js"></script>
+  </body>
+</html>
