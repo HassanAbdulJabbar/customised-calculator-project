@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
     <div class="calculator-container">
@@ -50,6 +50,19 @@
           </div>
 
           <div id="variable-list" class="variable-list"></div>
+
+          <!-- Variable Selection for Operations -->
+          <div class="variable-selection hidden" id="variable-selection">
+            <h3 class="section-subtitle">Use Variables in Operations</h3>
+            <div class="variable-dropdown-container">
+              <select id="variable-dropdown" class="variable-dropdown">
+                <option value="">Select a variable...</option>
+              </select>
+              <button class="btn btn-info" onclick="insertSelectedVariable()">
+                Insert Variable
+              </button>
+            </div>
+          </div>
         </section>
 
         <!-- Constants Section -->
@@ -121,7 +134,6 @@
               id="inputfield"
               class="calculator-display"
               placeholder="Perform calculations....."
-              readonly
             ></textarea>
           </div>
 
@@ -240,7 +252,7 @@
     </div>
 
     <!-- History Popup Modal -->
-    <div id="historyModal" class="modal" style="display: none">
+    <div id="historyModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
           <h2>Calculation History</h2>
@@ -260,6 +272,6 @@
       </div>
     </div>
 
-    <script src="logic.js"></script>
+    <script type="module" src="services/calculation-service.js"></script>
   </body>
 </html>
